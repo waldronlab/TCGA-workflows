@@ -7,14 +7,14 @@ workflow TCGAflow {
     String bioc_docker = "bioconductor/bioconductor_full:devel"
 
     String input_data_path = input_data
-    String input_file_name = basename(input_data_path)
+#    String input_sample_name = basename(input_data_path)
 
     call readDataTask {
         input:
         disk_size = data_disk_size,
         mem_size = data_mem_size,
         docker_image = bioc_docker,
-        SampleName = input_file_name
+        SampleFile = input_data_path 
     }
     
     output {
@@ -30,7 +30,7 @@ task readDataTask {
     String docker_image 
     String mem_size
     Int disk_size
-    String SampleName
+    String SampleFile
 
     runtime {
         docker: docker_image
@@ -42,11 +42,10 @@ task readDataTask {
     command {
         set -e
         set -o pipefail
-        pwd
     }
 
     output {
-        File sampOut = "${SampleName}.txt"
+        File sampOut = "${SampleFile}"
     }
 
 }
