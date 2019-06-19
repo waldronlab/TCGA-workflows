@@ -22,14 +22,16 @@ workflow TCGAflow {
 
 task readDataTask {
 
-    String SampleName
     String docker_image 
+    String mem_size
+    Int disk_size
+    String SampleName
 
     runtime {
         docker: docker_image
         memory: mem_size
         cpu: "1"
-        disks: "local-disk" + disk_size + " HDD"
+        disks: "local-disk " + disk_size + " HDD"
     }
 
     output {
