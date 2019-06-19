@@ -34,6 +34,12 @@ task readDataTask {
         disks: "local-disk " + disk_size + " HDD"
     }
 
+    command {
+        set -e
+        set -o pipefail
+        pwd
+    }
+
     output {
         File sampOut = "${SampleName}.txt"
     }
